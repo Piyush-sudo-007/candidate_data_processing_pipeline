@@ -55,3 +55,213 @@ python main.py
 ```
 pytest tests/
 ```
+
+## Sample Input (ATS JSON)
+
+{
+"contact_info": {
+"name": "Piyush Dev",
+"cell_phone": "+91 93048 68598",
+"email": "piyushdevmgr@gmail.com"
+},
+"location_data": {
+"city_name": "Munger",
+"state": "Bihar",
+"country": "India"
+},
+"tagged_skills": ["Python", "Backend Development", "Docker"],
+"work_history": [
+{
+"employer": "Google",
+"role": "Software Engineer",
+"from_date": "2023-05",
+"to_date": "2026-06",
+"desc": "Designed scalable microservices and optimized database queries."
+}
+],
+"education_history": [
+{
+"institution": "National Institute of Technology (NIT) Mizoram",
+"degree": "B.Tech",
+"major": "Computer Science and Engineering",
+"grad_year": "2027"
+}
+]
+}
+
+## Sample Input (GitHub)
+
+{
+"name": "Piyush Dev",
+"email": "piyushdev@gmail.com",
+"html_url": "https://github.com/Piyush-sudo-007",
+"bio": "Backend Engineer specializing in Docker setups and Python microservices. Passionate about open-source contribution."
+}
+
+## Sample Runtime Config
+
+{
+"fields": [
+{"path": "full_name", "type": "string", "required": true},
+{"path": "primary_email", "from": "emails[0]", "type": "string", "required": true},
+{"path": "github_link", "from": "links.github", "type": "string"},
+{"path": "years_experience", "type": "number"},
+{"path": "skills", "type": "array"}
+],
+"include_confidence": true,
+"on_missing": "null"
+}
+
+## Expected Output
+
+--- INTERNAL CANONICAL PROFILE ---
+{
+"candidate_id": "cand_001",
+"full_name": "Piyush Dev",
+"emails": [
+"piyushdevmgr@gmail.com",
+"piyushdev@gmail.com"
+],
+"phones": [
+"+919304868598"
+],
+"location": {
+"city": "Munger",
+"region": "Bihar",
+"country": "INDIA"
+},
+"links": {
+"linkedin": null,
+"github": "https://github.com/Piyush-sudo-007",
+"portfolio": null,
+"other": []
+},
+"headline": "Backend Engineer specializing in Docker setups and Python microservices. Passionate about open-source contribution.",
+"years_experience": 3.1,
+"skills": [
+{
+"name": "Python",
+"confidence": 1.0,
+"sources": [
+"ats_json",
+"github_api"
+]
+},
+{
+"name": "Backend Development",
+"confidence": 0.9,
+"sources": [
+"ats_json"
+]
+},
+{
+"name": "Docker",
+"confidence": 1.0,
+"sources": [
+"ats_json",
+"github_api"
+]
+}
+],
+"experience": [
+{
+"company": "Google",
+"title": "Software Engineer",
+"start": "2023-05",
+"end": "2026-06",
+"summary": "Designed scalable microservices and optimized database queries."
+}
+],
+"education": [
+{
+"institution": "National Institute of Technology (NIT) Mizoram",
+"degree": "B.Tech",
+"field": "Computer Science and Engineering",
+"end_year": "2027"
+}
+],
+"provenance": [
+{
+"field": "full_name",
+"source": "ats_json",
+"method": "priority_override"
+},
+{
+"field": "headline",
+"source": "github_api",
+"method": "priority_override"
+},
+{
+"field": "location",
+"source": "ats_json",
+"method": "struct_merge"
+},
+{
+"field": "emails[piyushdevmgr@gmail.com]",
+"source": "ats_json",
+"method": "append_unique"
+},
+{
+"field": "emails[piyushdev@gmail.com]",
+"source": "github_api",
+"method": "append_unique"
+},
+{
+"field": "phones[+919304868598]",
+"source": "ats_json",
+"method": "append_unique"
+},
+{
+"field": "links.github",
+"source": "github_api",
+"method": "dict_merge"
+},
+{
+"field": "experience[Google]",
+"source": "ats_json",
+"method": "append_unique_struct"
+},
+{
+"field": "education[National Institute of Technology (NIT) Mizoram]",
+"source": "ats_json",
+"method": "append_unique_struct"
+}
+],
+"overall_confidence": 0.85
+}
+
+--- SHAPED RUNTIME PROJECTED OUTPUT ---
+{
+"full_name": "Piyush Dev",
+"primary_email": "piyushdevmgr@gmail.com",
+"github_link": "https://github.com/Piyush-sudo-007",
+"years_experience": 3.1,
+"skills": [
+{
+"name": "Python",
+"confidence": 1.0,
+"sources": [
+"ats_json",
+"github_api"
+]
+},
+{
+"name": "Backend Development",
+"confidence": 0.9,
+"sources": [
+"ats_json"
+]
+},
+{
+"name": "Docker",
+"confidence": 1.0,
+"sources": [
+"ats_json",
+"github_api"
+]
+}
+],
+"overall_confidence": 0.85
+}
+
+## All the Test Cases are passed. (tests/test_pipeline.py)
