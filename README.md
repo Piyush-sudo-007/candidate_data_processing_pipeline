@@ -4,6 +4,9 @@ An enterprise-grade, deterministic ETL ingestion pipeline built to ingest candid
 
 ## Key Architectural Decisions
 
+[Source Inputs] ---> [Data Parsers] ---> [Data Normalizers] ---> [Pipeline Engine] ---> [Canonical Profile] ---> [Output Projector]
+(ATS, GitHub) (Schema Mapping) (E.164, ISO-3166) (Conflict Resolver) (Pydantic Validation) (Runtime Shaping)
+
 1. **Strict Type Safety & Enforcement**: Built using `Pydantic v2` models to ensure malformed inputs or unintended type mutations are caught instantly at runtime before database entry points.
 2. **Deterministic Priority Overrides**: Implements strict rule-based hierarchies (e.g., ATS entries override unverified social hooks) to ensure data transformations are reproducible and predictable.
 3. **Traceable Provenance**: Every field modification tracks its origin source and internal consolidation method, supporting transparent auditing for automated data tracking.

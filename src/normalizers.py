@@ -1,5 +1,4 @@
 import re
-import datetime
 import phonenumbers
 from iso3166 import countries
 from typing import Any, Optional
@@ -9,7 +8,7 @@ def normalize_phone(phone_str: Any) -> Optional[str]:
     return None
   
   try:
-    parsed = phonenumbers.parse(phone_str, "US")
+    parsed = phonenumbers.parse(phone_str, "IN")
 
     if phonenumbers.is_possible_number(parsed):
       return phonenumbers.format_number(parsed, phonenumbers.PhoneNumberFormat.E164)

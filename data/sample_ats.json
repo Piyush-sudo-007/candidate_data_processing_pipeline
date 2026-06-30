@@ -1,0 +1,30 @@
+{
+  "contact_info": {
+    "name": "Piyush Dev",
+    "cell_phone": "+91 93048 68598",
+    "email": "piyushdevmgr@gmail.com"
+  },
+  "location_data": {
+    "city_name": "Munger",
+    "state": "Bihar",
+    "country": "India"
+  },
+  "tagged_skills": ["Python", "Backend Development", "Docker"],
+  "work_history": [
+    {
+      "employer": "Google",
+      "role": "Software Engineer",
+      "from_date": "2023-05",
+      "to_date": "2026-06",
+      "desc": "Designed scalable microservices and optimized database queries."
+    }
+  ],
+  "education_history": [
+    {
+      "institution": "National Institute of Technology (NIT) Mizoram",
+      "degree": "B.Tech",
+      "major": "Computer Science and Engineering",
+      "grad_year": "2027"
+    }
+  ]
+}
