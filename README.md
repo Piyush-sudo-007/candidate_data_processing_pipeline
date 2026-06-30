@@ -5,7 +5,6 @@ An enterprise-grade, deterministic ETL ingestion pipeline built to ingest candid
 ## Key Architectural Decisions
 
 [Source Inputs] ---> [Data Parsers] ---> [Data Normalizers] ---> [Pipeline Engine] ---> [Canonical Profile] ---> [Output Projector]
-(ATS, GitHub) (Schema Mapping) (E.164, ISO-3166) (Conflict Resolver) (Pydantic Validation) (Runtime Shaping)
 
 1. **Strict Type Safety & Enforcement**: Built using `Pydantic v2` models to ensure malformed inputs or unintended type mutations are caught instantly at runtime before database entry points.
 2. **Deterministic Priority Overrides**: Implements strict rule-based hierarchies (e.g., ATS entries override unverified social hooks) to ensure data transformations are reproducible and predictable.
@@ -187,6 +186,70 @@ pytest tests/
       "name": "Docker",
       "confidence": 1.0,
       "sources": ["ats_json", "github_api"]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Google",
+      "title": "Software Engineer",
+      "start": "2023-05",
+      "end": "2026-06",
+      "summary": "Designed scalable microservices and optimized database queries."
+    }
+  ],
+  "education": [
+    {
+      "institution": "National Institute of Technology (NIT) Mizoram",
+      "degree": "B.Tech",
+      "field": "Computer Science and Engineering",
+      "end_year": "2027"
+    }
+  ],
+  "provenance": [
+    {
+      "field": "full_name",
+      "source": "ats_json",
+      "method": "priority_override"
+    },
+    {
+      "field": "headline",
+      "source": "github_api",
+      "method": "priority_override"
+    },
+    {
+      "field": "location",
+      "source": "ats_json",
+      "method": "struct_merge"
+    },
+    {
+      "field": "emails[piyushdevmgr@gmail.com]",
+      "source": "ats_json",
+      "method": "append_unique"
+    },
+    {
+      "field": "emails[piyushdev@gmail.com]",
+      "source": "github_api",
+      "method": "append_unique"
+    },
+    {
+      "field": "phones[+919304868598]",
+      "source": "ats_json",
+      "method": "append_unique"
+    },
+    {
+      "field": "links.github",
+      "source": "github_api",
+      "method": "dict_merge"
+    },
+    {
+      "field": "experience[Google]",
+      "source": "ats_json",
+      "method": "append_unique_struct"
+    },
+    {
+      "field": "education[National Institute of Technology (NIT) Mizoram]",
+      "source": "ats_json",
+      "method": "append_unique_struct"
     }
   ],
   "overall_confidence": 0.85
