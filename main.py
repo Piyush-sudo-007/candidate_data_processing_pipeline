@@ -7,7 +7,7 @@ def main():
     raw_ats_input = {
         "contact_info": {
             "name": "Alex Mercer", 
-            "cell_phone": "+15550192834",
+            "cell_phone": "+1 (555) 019-2834",
             "email": "alex@mercer.dev"
         },
         "location_data": {"city_name": "San Francisco", "state": "CA", "country": "United States"},

@@ -11,7 +11,7 @@ def normalize_phone(phone_str: Any) -> Optional[str]:
   try:
     parsed = phonenumbers.parse(phone_str, "US")
 
-    if(phonenumbers.is_valid_number(parsed)):
+    if phonenumbers.is_possible_number(parsed):
       return phonenumbers.format_number(parsed, phonenumbers.PhoneNumberFormat.E164)
     
   except Exception:

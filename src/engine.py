@@ -1,6 +1,6 @@
 from typing import List, Dict, Any
 from .model import CanonicalProfile, Location, Skill, Experience, Provenance, Education
-import datetime
+from datetime import datetime
 
 class CandidatePipeline:
   def __init__(self):
@@ -18,7 +18,7 @@ class CandidatePipeline:
         total_days += (end_dt - start_dt).days
       except Exception:
         continue
-    return round(total_days/ 365 , 1) if total_days > 0 else 0.0
+    return round(total_days/ 365.25, 1) if total_days > 0 else 0.0
 
   def merge_profiles(self, candidate_id: str, parsed_sources: Dict[str, Dict[str, Any]]) -> CanonicalProfile:
     profile_data = {
@@ -97,7 +97,10 @@ class CandidatePipeline:
     for source, payload in parsed_sources.items():
       for edu in payload.get("education", []):
         if not any(e.institution.lower() == edu["institution"].lower() for e in merged_edu):
-          merged_edu.append(Education(**edu))
+          if isinstance(edu, Education):
+            merged_edu.append(edu)
+          else:
+            merged_edu.append(Education(**edu))
           provenance_list.append(Provenance(field=f"education[{edu['institution']}]", source=source, method="append_unique_struct"))
     profile_data["education"] = merged_edu
 

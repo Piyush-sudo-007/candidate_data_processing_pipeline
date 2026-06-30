@@ -32,8 +32,8 @@ class Provenance(BaseModel):
 class CanonicalProfile(BaseModel):
   candidate_id: str
   full_name: Optional[str] = None
-  emails: List[str] = Field(default_factory=List)
-  phones: List[str] = Field(validate_default=List)
+  emails: List[str] = Field(default_factory=list)
+  phones: List[str] = Field(default_factory=list)
   location: Optional[Location] = None
   links: Dict[str, Any] = Field(default_factory=lambda: {"linkedin": None, "github": None, "portfolio": None, "other": []})
   headline: Optional[str] = None
