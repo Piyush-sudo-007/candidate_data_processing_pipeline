@@ -1,0 +1,4 @@
+pydantic>=2.0.0
+phonenumbers
+iso3166
+pytest
